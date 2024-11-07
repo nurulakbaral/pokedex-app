@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { Button } from '@mui/material'
 
 export default function Home() {
   return (
-    <React.Fragment>
-      <h1>Hello World!</h1>
-    </React.Fragment>
+    <section>
+      <Button variant='contained'>Hello World!</Button>
+    </section>
   )
 }
