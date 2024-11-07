@@ -10,7 +10,7 @@ import { Language, ExpandMore } from '@mui/icons-material'
 
 interface TInternationalizationMenuProps extends BoxProps {}
 
-export function InternationalizationMenu({ className, ...props }: TInternationalizationMenuProps) {
+export function InternationalizationMenu({ ...props }: TInternationalizationMenuProps) {
   const [selectedLang, setSelectedLang] = React.useState<'en' | 'id'>('en')
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)

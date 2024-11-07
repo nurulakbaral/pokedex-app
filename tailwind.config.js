@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         'pokedex-grey': '#7B8082',
+        'pokedex-yellow': '#FFCB3B',
       },
     },
   },
