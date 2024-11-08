@@ -28,7 +28,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
 
   return (
     <Box display='flex' justifyContent='flex-end' {...props}>
-      <Button endIcon={<ExpandMore />} className='normal-case text-pokedex-grey' onClick={handleClick} color='inherit'>
+      <Button variant='outlined' endIcon={<ExpandMore />} className='normal-case text-black' onClick={handleClick}>
         9
       </Button>
 
