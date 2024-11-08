@@ -6,6 +6,12 @@ module.exports = {
       colors: {
         'pokedex-grey': '#7B8082',
         'pokedex-yellow': '#FFCB3B',
+        'chip-orange': '#E66D00',
+        'chip-red': '#DE2C2C',
+        'chip-green': '#01B956',
+        'chip-pink': '#E34C88',
+        'chip-blue': '#4350E6',
+        'chip-yellow': '#FFAF66',
       },
     },
   },

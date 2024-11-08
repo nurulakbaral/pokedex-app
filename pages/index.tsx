@@ -1,11 +1,10 @@
 import * as React from 'react'
-import { AppBar, Button, Toolbar, Box, Typography, Grid2 as Grid } from '@mui/material'
+import { AppBar, Button, Toolbar, Box, Typography, Grid2 as Grid, Pagination } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { InternationalizationMenu } from '~/src/features/internationalization/internationalization-menu'
-import { Banner } from '~/src/features/banner'
-import { BannerPokedex } from '~/src/features/banner/banner-pokedex'
+import { Banner, BannerPokedex, BannerPagination } from '~/src/features/banner'
 
 export default function Home() {
   return (
@@ -65,6 +64,10 @@ export default function Home() {
             </Grid>
           </Grid>
         </div>
+
+        <Box mt={12} mb={10} display='flex' justifyContent='center'>
+          <BannerPagination />
+        </Box>
       </div>
     </section>
   )

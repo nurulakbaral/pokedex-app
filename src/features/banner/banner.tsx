@@ -16,7 +16,7 @@ export function Banner({ className, ...props }: TBannerProps) {
       <Box>
         <Typography variant='h2' fontWeight='bold'>{`All the Pokémon data you'll ever need in one place!`}</Typography>
 
-        <Typography className='text-pokedex-grey font-light text-xl my-6' variant='body1'>
+        <Typography className='text-pokedex-grey text-xl my-6' variant='body1'>
           Thousands of data compiled into one place
         </Typography>
 
