@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { AppBar, Button, Toolbar, Box, Typography, Grid2 as Grid } from '@mui/material'
+import { Box, Typography, Grid2 as Grid } from '@mui/material'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import { I18nMenu } from '~/src/features/i18n/i18n-menu'
 import { Banner, BannerPokedex, BannerPagination, useStorePagination } from '~/src/features/banner'
 import { httpRequest } from '~/src/libraries/http-request'
 import { BannerPokedexSkeleton } from '~/src/features/banner/banner-pokedex-skeleton'
 import { Show } from '~/src/components/base/Show'
 import { useTranslations } from '~/src/components/hooks/use-translations'
+import { NavigationTop } from '~/src/features/navigation/navigation-top'
 
 export interface TResponsePokemonList {
   count: number
@@ -46,25 +44,7 @@ export default function Home() {
       </Head>
 
       <Box paddingX={16}>
-        <AppBar position='relative' className='py-4' color='transparent' elevation={0}>
-          <Toolbar className='gap-9'>
-            <Image priority width={170} height={60} alt='Pokemon Logo' src='/logos/pokemon-logo.png' />
-
-            <Link href='/'>
-              <Button className='normal-case font-medium' size='large' disableRipple>
-                {t.NavigationMenu.Home}
-              </Button>
-            </Link>
-
-            <Link href='/pokemon-type'>
-              <Button className='normal-case font-medium' size='large' disableRipple>
-                {t.NavigationMenu.PokemonType}
-              </Button>
-            </Link>
-
-            <I18nMenu flexGrow={1} />
-          </Toolbar>
-        </AppBar>
+        <NavigationTop />
 
         <Banner />
       </Box>

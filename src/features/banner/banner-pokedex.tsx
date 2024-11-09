@@ -21,6 +21,7 @@ import { httpRequest } from '~/src/libraries/http-request'
 import cx from 'clsx'
 import { TResponsePokemonStats } from './types'
 import { useTranslations } from '~/src/components/hooks/use-translations'
+import { useRouter } from 'next/router'
 
 /**
  * =======================================
@@ -38,6 +39,7 @@ interface TBannerPokedexProps extends CardProps {
 
 export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedexProps) {
   const t = useTranslations()
+  const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const { data: pokemonDetailData, ...pokemonDetailRes } = useQuery({
     queryKey: ['pokemonDetail', pokemonDetail.url],
@@ -166,7 +168,11 @@ export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedex
                 </Box>
 
                 <Box mt={4}>
-                  <Button variant='contained' className='text-white normal-case font-medium'>
+                  <Button
+                    onClick={() => router.push(`/${pokemonDetail.name}`)}
+                    variant='contained'
+                    className='text-white normal-case font-medium'
+                  >
                     {t.PokemonDetail.ButtonMoreDetails}
                   </Button>
                 </Box>
