@@ -4,11 +4,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import { InternationalizationMenu } from '~/src/features/internationalization/internationalization-menu'
+import { I18nMenu } from '~/src/features/i18n/i18n-menu'
 import { Banner, BannerPokedex, BannerPagination, useStorePagination } from '~/src/features/banner'
 import { httpRequest } from '~/src/libraries/http-request'
 import { BannerPokedexSkeleton } from '~/src/features/banner/banner-pokedex-skeleton'
 import { Show } from '~/src/components/base/Show'
+import { useTranslations } from '~/src/components/hooks/use-translations'
 
 export interface TResponsePokemonList {
   count: number
@@ -34,6 +35,7 @@ export function useRequestPokemonList() {
 }
 
 export default function Home() {
+  const t = useTranslations()
   const { data: pokemonListData, ...pokemonListRes } = useRequestPokemonList()
 
   return (
@@ -50,17 +52,17 @@ export default function Home() {
 
             <Link href='/'>
               <Button className='normal-case font-medium' size='large' disableRipple>
-                Home
+                {t.NavigationMenu.Home}
               </Button>
             </Link>
 
             <Link href='/pokemon-type'>
               <Button className='normal-case font-medium' size='large' disableRipple>
-                Pokemon Type
+                {t.NavigationMenu.PokemonType}
               </Button>
             </Link>
 
-            <InternationalizationMenu flexGrow={1} />
+            <I18nMenu flexGrow={1} />
           </Toolbar>
         </AppBar>
 

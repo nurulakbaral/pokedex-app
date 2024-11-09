@@ -1,17 +1,18 @@
 import * as React from 'react'
 import { Box, Button, Menu, MenuItem, type BoxProps } from '@mui/material'
 import { Language, ExpandMore } from '@mui/icons-material'
+import { useRouter } from 'next/router'
 
 /**
  * =======================================
- * @MainComponent Internationalization Menu
+ * @MainComponent I18n Menu
  * ========================================
  */
 
-interface TInternationalizationMenuProps extends BoxProps {}
+interface TI18nMenuProps extends BoxProps {}
 
-export function InternationalizationMenu({ ...props }: TInternationalizationMenuProps) {
-  const [selectedLang, setSelectedLang] = React.useState<'en' | 'id'>('en')
+export function I18nMenu({ ...props }: TI18nMenuProps) {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -21,7 +22,7 @@ export function InternationalizationMenu({ ...props }: TInternationalizationMenu
 
   function handleClose(lang: 'en' | 'id') {
     return () => {
-      setSelectedLang(lang)
+      router.push(`/`, '/', { locale: lang })
       setAnchorEl(null)
     }
   }
@@ -35,7 +36,7 @@ export function InternationalizationMenu({ ...props }: TInternationalizationMenu
         startIcon={<Language />}
         endIcon={<ExpandMore />}
       >
-        {selectedLang === 'en' ? 'English' : 'Indonesia'}
+        {router.locale === 'en' ? 'English' : 'Indonesia'}
       </Button>
 
       <Menu

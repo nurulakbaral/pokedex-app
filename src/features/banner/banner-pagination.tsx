@@ -115,7 +115,7 @@ export function BannerPagination({ ...props }: TBannerPaginationProps) {
 
       <Pagination
         onChange={(_, page) => setPagination(page, perPage)}
-        count={Math.ceil(Number(pokemonListData?.totalData) / perPage)}
+        count={Math.ceil(Number(pokemonListData?.totalData || 0) / perPage)}
         variant='outlined'
         shape='rounded'
         showFirstButton
