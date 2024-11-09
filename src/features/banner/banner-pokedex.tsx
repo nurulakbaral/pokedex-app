@@ -20,6 +20,7 @@ import { useQuery } from '@tanstack/react-query'
 import { httpRequest } from '~/src/libraries/http-request'
 import cx from 'clsx'
 import { TResponsePokemonStats } from './types'
+import { useTranslations } from '~/src/components/hooks/use-translations'
 
 /**
  * =======================================
@@ -36,6 +37,7 @@ interface TBannerPokedexProps extends CardProps {
 }
 
 export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedexProps) {
+  const t = useTranslations()
   const [open, setOpen] = React.useState(false)
   const { data: pokemonDetailData, ...pokemonDetailRes } = useQuery({
     queryKey: ['pokemonDetail', pokemonDetail.url],
@@ -119,17 +121,17 @@ export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedex
 
                 <Box mt={4} display='flex' justifyContent='space-between' gap={4}>
                   <Typography>
-                    <span className='font-medium'>Weight</span>: {pokemonDetailData?.weight}
+                    <span className='font-medium'>{t.PokemonDetail.Weight}</span>: {pokemonDetailData?.weight}
                   </Typography>
 
                   <Typography>
-                    <span className='font-medium'>Height</span>: {pokemonDetailData?.height}
+                    <span className='font-medium'>{t.PokemonDetail.Height}</span>: {pokemonDetailData?.height}
                   </Typography>
                 </Box>
 
                 <Box mt={4} display='flex' justifyContent='space-between' gap={4}>
                   <Typography>
-                    <span className='font-medium'>Abilities</span>:
+                    <span className='font-medium'>{t.PokemonDetail.Abilities}</span>:
                   </Typography>
 
                   <Box>
@@ -141,7 +143,7 @@ export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedex
 
                 <Box mt={4} display='flex' justifyContent='space-between'>
                   <Typography>
-                    <span className='font-medium'>Type</span>:
+                    <span className='font-medium'>{t.PokemonDetail.Types}</span>:
                   </Typography>
 
                   <Box>
@@ -165,7 +167,7 @@ export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedex
 
                 <Box mt={4}>
                   <Button variant='contained' className='text-white normal-case font-medium'>
-                    More Detail
+                    {t.PokemonDetail.ButtonMoreDetails}
                   </Button>
                 </Box>
               </Box>

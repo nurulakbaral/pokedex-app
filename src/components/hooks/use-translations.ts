@@ -10,6 +10,16 @@ export const LangId = {
     Subtitle: 'Ribuan data dikumpulkan ke dalam satu tempat',
     Button: 'Kunjungi PokèDex',
   },
+  Footer: {
+    WordingGeneration: 'Semua Total Hasil Generasi',
+  },
+  PokemonDetail: {
+    Weight: 'Berat',
+    Height: 'Tinggi',
+    Abilities: 'Kemampuan',
+    Types: 'Tipe',
+    ButtonMoreDetails: 'Detail Lengkap',
+  },
 }
 
 export const LangEn = {
@@ -21,6 +31,16 @@ export const LangEn = {
     Title: 'All the Pokémon data you’ll ever need in one place!',
     Subtitle: 'Thousands of data compiled into one place',
     Button: 'Check PokèDex',
+  },
+  Footer: {
+    WordingGeneration: 'All Generation Totaling',
+  },
+  PokemonDetail: {
+    Weight: 'Weight',
+    Height: 'Height',
+    Abilities: 'Abilities',
+    Types: 'Types',
+    ButtonMoreDetails: 'More Detail',
   },
 }
 

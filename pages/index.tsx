@@ -75,7 +75,7 @@ export default function Home() {
         </Typography>
 
         <Typography className='mt-4' textAlign='center' variant='body1'>
-          All Generation Totaling
+          {t.Footer.WordingGeneration}
         </Typography>
 
         <Typography textAlign='center' variant='body1'>
