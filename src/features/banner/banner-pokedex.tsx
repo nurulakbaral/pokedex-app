@@ -15,6 +15,10 @@ import {
 } from '@mui/material'
 import Image from 'next/image'
 import { Close } from '@mui/icons-material'
+import { useQuery } from '@tanstack/react-query'
+import { httpRequest } from '~/src/libraries/http-request'
+import cx from 'clsx'
+import { TResponsePokemonStats } from './types'
 
 /**
  * =======================================
@@ -22,24 +26,61 @@ import { Close } from '@mui/icons-material'
  * ========================================
  */
 
-interface TBannerPokedexProps extends CardProps {}
+interface TBannerPokedexProps extends CardProps {
+  index: number
+  pokemonDetail: {
+    name: string
+    url: string
+  }
+}
 
-export function BannerPokedex({ ...props }: TBannerPokedexProps) {
+export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedexProps) {
+  const { data: pokemonDetailData } = useQuery({
+    queryKey: ['pokemonDetail', pokemonDetail.url],
+    queryFn: async () =>
+      httpRequest.get<TResponsePokemonStats>(pokemonDetail.url).then((res) => ({
+        imageUrl: res.data.sprites.other['official-artwork'].front_default,
+        types: res.data.types.map((type) => ({
+          no: type.slot,
+          name: type.type.name,
+        })),
+        height: res.data.height,
+        weight: res.data.weight,
+        abilities: res.data.abilities.map((ability) => ({
+          name: '•' + ' ' + ability.ability.name,
+        })),
+      })),
+    enabled: !!pokemonDetail.url,
+  })
   const [open, setOpen] = React.useState(false)
 
   return (
     <div>
       <Card onClick={() => setOpen(true)} className='max-w-fit rounded-xl' {...props}>
         <CardActionArea className='p-4'>
-          <Image width={275} height={275} alt='Image Banner' src='/images/img-dummy.jpeg' />
+          <Image width={275} height={275} alt='Image Banner' src={pokemonDetailData?.imageUrl || ''} />
 
           <CardContent>
-            <Typography>#001</Typography>
+            <Typography>{`#${index.toString().padStart(4, '0')}`}</Typography>
             <Typography className='my-4 font-bold' variant='h5'>
-              Pokemon Name
+              {pokemonDetail.name}
             </Typography>
-            <Chip className='bg-chip-orange text-white font-bold' label='Type 01' />
-            <Chip className='bg-chip-pink text-white font-bold' label='Type 01' />
+
+            {pokemonDetailData?.types.map((type) => (
+              <Chip
+                key={type.name}
+                className={cx(
+                  'text-white font-bold mr-2',
+                  type.no === 1 && 'bg-chip-orange',
+                  type.no === 2 && 'bg-chip-red',
+                  type.no === 3 && 'bg-chip-green',
+                  type.no === 4 && 'bg-chip-pink',
+                  type.no === 5 && 'bg-chip-blue',
+                  type.no === 6 && 'bg-chip-yellow',
+                )}
+                label={type.name}
+              />
+            ))}
           </CardContent>
         </CardActionArea>
       </Card>
@@ -58,30 +99,32 @@ export function BannerPokedex({ ...props }: TBannerPokedexProps) {
 
           <DialogContent>
             <Box gap={4} display='flex'>
-              <Image src='/images/img-dummy.jpeg' alt='Pokemon Detail' width={400} height={400} />
+              <Image src={pokemonDetailData?.imageUrl || ''} alt='Pokemon Detail' width={400} height={400} />
 
               <Box>
                 <Typography fontWeight={500} variant='h4'>
-                  Pokemon Name
+                  {pokemonDetail.name}
                 </Typography>
 
-                <Box mt={4} display='flex' justifyContent='space-between'>
+                <Box mt={4} display='flex' justifyContent='space-between' gap={4}>
                   <Typography>
-                    <span className='font-medium'>Weight</span>: 0.5kg
+                    <span className='font-medium'>Weight</span>: {pokemonDetailData?.weight}
                   </Typography>
+
                   <Typography>
-                    <span className='font-medium'>Height</span>: 0.5kg
+                    <span className='font-medium'>Height</span>: {pokemonDetailData?.height}
                   </Typography>
                 </Box>
 
-                <Box mt={4} display='flex' justifyContent='space-between'>
+                <Box mt={4} display='flex' justifyContent='space-between' gap={4}>
                   <Typography>
                     <span className='font-medium'>Abilities</span>:
                   </Typography>
 
                   <Box>
-                    <Typography>- Abilities 1</Typography>
-                    <Typography>- Abilities 2</Typography>
+                    {pokemonDetailData?.abilities.map((ability) => (
+                      <Typography key={ability.name}>{ability.name}</Typography>
+                    ))}
                   </Box>
                 </Box>
 
@@ -91,8 +134,21 @@ export function BannerPokedex({ ...props }: TBannerPokedexProps) {
                   </Typography>
 
                   <Box>
-                    <Chip className='bg-chip-orange text-white font-bold' label='Type 01' />
-                    <Chip className='bg-chip-pink text-white font-bold' label='Type 01' />
+                    {pokemonDetailData?.types.map((type) => (
+                      <Chip
+                        key={type.name}
+                        className={cx(
+                          'text-white font-bold mr-2',
+                          type.no === 1 && 'bg-chip-orange',
+                          type.no === 2 && 'bg-chip-red',
+                          type.no === 3 && 'bg-chip-green',
+                          type.no === 4 && 'bg-chip-pink',
+                          type.no === 5 && 'bg-chip-blue',
+                          type.no === 6 && 'bg-chip-yellow',
+                        )}
+                        label={type.name}
+                      />
+                    ))}
                   </Box>
                 </Box>
 

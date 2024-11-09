@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { type BoxProps, Box, Button, Menu, MenuItem, Pagination, Typography } from '@mui/material'
 import { ExpandMore } from '@mui/icons-material'
+import { useRequestPokemonList } from '~/pages'
 
 /**
  * =======================================
@@ -11,6 +12,7 @@ import { ExpandMore } from '@mui/icons-material'
 interface TPaginationPerPageProps extends BoxProps {}
 
 export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
+  const { data } = useRequestPokemonList()
   const [selectedLang, setSelectedLang] = React.useState<'en' | 'id'>('en')
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -44,7 +46,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
         id='internationalization-menu'
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleClose('en')}
         MenuListProps={{
           'aria-labelledby': 'internationalization-menu',
         }}
@@ -65,13 +67,15 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
 interface TBannerPaginationProps extends BoxProps {}
 
 export function BannerPagination({ ...props }: TBannerPaginationProps) {
+  const { data } = useRequestPokemonList()
+
   return (
     <Box display='flex' justifyContent='space-between' gap={12} alignItems='center' {...props}>
       <PaginationPerPage />
 
       <Pagination count={10} variant='outlined' shape='rounded' showFirstButton showLastButton />
 
-      <Typography>Total Data: 999</Typography>
+      <Typography>Total Data: {data?.totalData}</Typography>
     </Box>
   )
 }
