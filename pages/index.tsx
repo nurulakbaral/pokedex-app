@@ -5,8 +5,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 import { InternationalizationMenu } from '~/src/features/internationalization/internationalization-menu'
-import { Banner, BannerPokedex, BannerPagination } from '~/src/features/banner'
+import { Banner, BannerPokedex, BannerPagination, useStorePagination } from '~/src/features/banner'
 import { httpRequest } from '~/src/libraries/http-request'
+import { BannerPokedexSkeleton } from '~/src/features/banner/banner-pokedex-skeleton'
+import { Show } from '~/src/components/base/Show'
 
 export interface TResponsePokemonList {
   count: number
@@ -19,10 +21,12 @@ export interface TResponsePokemonList {
 }
 
 export function useRequestPokemonList() {
+  const { page, perPage } = useStorePagination()
+
   return useQuery({
-    queryKey: ['homePokemonList'],
-    queryFn: async () =>
-      httpRequest.get<TResponsePokemonList>('/pokemon?offset=10&limit=10').then((res) => ({
+    queryKey: ['homePokemonList', page * perPage, perPage],
+    queryFn: async ({ queryKey }) =>
+      httpRequest.get<TResponsePokemonList>(`/pokemon?offset=${queryKey[1]}}&limit=${queryKey[2]}`).then((res) => ({
         totalData: res.data.count,
         pokemonList: res.data.results,
       })),
@@ -30,7 +34,7 @@ export function useRequestPokemonList() {
 }
 
 export default function Home() {
-  const { data } = useRequestPokemonList()
+  const { data: pokemonListData, ...pokemonListRes } = useRequestPokemonList()
 
   return (
     <section>
@@ -73,17 +77,23 @@ export default function Home() {
         </Typography>
 
         <Typography textAlign='center' variant='body1'>
-          {data?.totalData} Pokemon
+          {pokemonListData?.totalData} Pokemon
         </Typography>
 
         <div className='px-10 mt-10'>
-          <Grid justifyContent='center' container spacing={2}>
-            {data?.pokemonList.map((pokemon, index) => (
-              <Grid key={pokemon.name} display='flex' justifyContent='center' alignItems='center' size={4}>
-                <BannerPokedex index={index} pokemonDetail={pokemon} />
-              </Grid>
-            ))}
-          </Grid>
+          <Show when={pokemonListRes.isLoading}>
+            <BannerPokedexSkeleton />
+          </Show>
+
+          <Show when={!pokemonListRes.isLoading}>
+            <Grid justifyContent='center' container spacing={2}>
+              {pokemonListData?.pokemonList.map((pokemon, index) => (
+                <Grid key={pokemon.name} display='flex' justifyContent='center' alignItems='center' size={4}>
+                  <BannerPokedex index={index} pokemonDetail={pokemon} />
+                </Grid>
+              ))}
+            </Grid>
+          </Show>
         </div>
 
         <Box mt={12} mb={10} display='flex' justifyContent='center'>

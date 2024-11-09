@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Skeleton,
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
@@ -35,7 +36,8 @@ interface TBannerPokedexProps extends CardProps {
 }
 
 export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedexProps) {
-  const { data: pokemonDetailData } = useQuery({
+  const [open, setOpen] = React.useState(false)
+  const { data: pokemonDetailData, ...pokemonDetailRes } = useQuery({
     queryKey: ['pokemonDetail', pokemonDetail.url],
     queryFn: async () =>
       httpRequest.get<TResponsePokemonStats>(pokemonDetail.url).then((res) => ({
@@ -52,7 +54,16 @@ export function BannerPokedex({ index, pokemonDetail, ...props }: TBannerPokedex
       })),
     enabled: !!pokemonDetail.url,
   })
-  const [open, setOpen] = React.useState(false)
+
+  if (pokemonDetailRes.isPending) {
+    return (
+      <div>
+        <Skeleton variant='rectangular' width={275} height={275} />
+        <Skeleton width='50%' />
+        <Skeleton width='40%' />
+      </div>
+    )
+  }
 
   return (
     <div>

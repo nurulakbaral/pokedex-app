@@ -50,7 +50,7 @@ export function InternationalizationMenu({ ...props }: TInternationalizationMenu
         id='internationalization-menu'
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose('en')}
+        onClose={() => setAnchorEl(null)}
         MenuListProps={{
           'aria-labelledby': 'internationalization-menu',
         }}
