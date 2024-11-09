@@ -17,13 +17,13 @@ export async function requestEvolutionPokemonChain(speciesUrl: string) {
   const responseChain = await httpRequest.get(responseSpecies.data.evolution_chain.url)
   const chain = responseChain.data.chain
 
-  let evolutionData = []
+  let evolutionData: Array<{ name: string; url: string }> = []
   let currentChain: TEvolutionChain | null = chain
 
   while (currentChain) {
     const name = currentChain.species.name
-    const image = await getPokemonImage(name)
-    evolutionData.push({ name, image })
+    const url = await getPokemonImage(name)
+    evolutionData.push({ name, url })
 
     if (currentChain.evolves_to.length > 0) {
       currentChain = currentChain.evolves_to[0]

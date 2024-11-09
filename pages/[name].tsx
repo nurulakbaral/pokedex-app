@@ -9,6 +9,79 @@ import { useQuery } from '@tanstack/react-query'
 import { httpRequest } from '~/src/libraries/http-request'
 import { TResponsePokemonStats } from '~/src/features/banner/types'
 import { requestEvolutionPokemonChain } from '~/src/services/get-pokemon-evolution'
+import { ArrowForward } from '@mui/icons-material'
+
+/**
+ * =======================================
+ * Section Pokemon Evolution
+ * ========================================
+ */
+
+interface TSectionPokemonEvolutionProps extends BoxProps {
+  sectionPokemonEvolution: null | Array<{ name: string; url: string }>
+}
+
+export function SectionPokemonEvolution({ sectionPokemonEvolution, ...props }: TSectionPokemonEvolutionProps) {
+  const t = useTranslations()
+
+  return (
+    <Box mt={6} {...props}>
+      <Typography className='font-bold text-xl'>{t.SectionNames.Evolution}:</Typography>
+
+      <Box
+        maxWidth={'100%'}
+        overflow='auto'
+        display='flex'
+        flexWrap='nowrap'
+        gap={4}
+        mt={4}
+        p={4}
+        sx={{
+          overscrollBehavior: 'contain',
+        }}
+      >
+        {sectionPokemonEvolution?.map((evolution, index) => (
+          <Box key={evolution.name + index} display='flex'>
+            <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+              <Box
+                flexShrink={0}
+                display='flex'
+                flexDirection={'column'}
+                alignItems='center'
+                justifyContent='center'
+                sx={{
+                  borderRadius: 100,
+                  width: 200,
+                  height: 200,
+                  border: `16px solid ${cx(
+                    index === 0 && '#0571A6',
+                    index === 1 && '#E66D00',
+                    index === 2 && '#E6AB09',
+                    index === 3 && '#01B956',
+                    index === 4 && '#3C48CF',
+                    index === 5 && '#DE2C2C',
+                    index >= 6 && '#E6AB09',
+                  )}`,
+                  padding: 4,
+                }}
+              >
+                <Image width={200} height={200} src={evolution.url.toString() || ''} alt={evolution.name} />
+              </Box>
+
+              <Typography className='font-bold text-xl mt-4'>{evolution.name}</Typography>
+            </Box>
+
+            {index !== sectionPokemonEvolution.length - 1 && (
+              <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                <ArrowForward className='text-[100px] ml-4' />
+              </Box>
+            )}
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  )
+}
 
 /**
  * =======================================
@@ -21,9 +94,11 @@ interface TSectionPokemonStatsProps extends BoxProps {
 }
 
 export function SectionPokemonStats({ sectionPokemonStats, ...props }: TSectionPokemonStatsProps) {
+  const t = useTranslations()
+
   return (
     <Box mt={6} {...props}>
-      <Typography className='font-bold text-xl'>Stats:</Typography>
+      <Typography className='font-bold text-xl'>{t.SectionNames.Stats}:</Typography>
 
       <Box
         maxWidth={'100%'}
@@ -95,9 +170,11 @@ interface TSectionPokemonImagesProps extends BoxProps {
 }
 
 export function SectionPokemonImages({ sectionPokemonImages, ...props }: TSectionPokemonImagesProps) {
+  const t = useTranslations()
+
   return (
     <Box>
-      <Typography className='font-bold text-xl'>Other Images:</Typography>
+      <Typography className='font-bold text-xl'>{t.SectionNames.OtherImages}:</Typography>
 
       <Box
         sx={{
@@ -279,6 +356,8 @@ export default function PokemonDetailPage() {
         <SectionPokemonImages sectionPokemonImages={pokemonDetailData?.sectionPokemonSprites || []} />
 
         <SectionPokemonStats sectionPokemonStats={pokemonDetailData?.sectionPokemonStats || []} />
+
+        <SectionPokemonEvolution sectionPokemonEvolution={pokemonDetailData?.sectionPokemonEvolution || []} />
       </Box>
     </Box>
   )

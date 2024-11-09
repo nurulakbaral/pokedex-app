@@ -20,6 +20,11 @@ export const LangId = {
     Types: 'Tipe',
     ButtonMoreDetails: 'Detail Lengkap',
   },
+  SectionNames: {
+    OtherImages: 'Gambar Lain',
+    Stats: 'Statistik',
+    Evolution: 'Evolusi',
+  },
 }
 
 export const LangEn = {
@@ -41,6 +46,11 @@ export const LangEn = {
     Abilities: 'Abilities',
     Types: 'Types',
     ButtonMoreDetails: 'More Detail',
+  },
+  SectionNames: {
+    OtherImages: 'Other Images',
+    Stats: 'Stats',
+    Evolution: 'Evolution',
   },
 }
 
