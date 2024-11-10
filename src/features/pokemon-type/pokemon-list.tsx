@@ -30,38 +30,33 @@ export function useRequestPokemonList() {
   return useQuery({
     queryKey: ['pokemonList', currentPokemonType.name],
     queryFn: async () => {
-      const pokemonList: Array<{
-        no: number
-        imgUrl: string
-        name: string
-        types: Array<{ no: number; name: string }>
-      }> = []
-
       const pokemonListData = await httpRequest
         .get<TResponsePokemonList>(`/type/${currentPokemonType.name}`)
         .then((res) => ({
           pokemonList: res.data.pokemon,
         }))
 
-      for (const [index, pokemon] of pokemonListData.pokemonList.entries()) {
-        const pokemonDetail = await httpRequest
-          .get<TResponsePokemonStats>(`/pokemon/${pokemon.pokemon.name}`)
-          .then((res) => ({
-            imgUrl: res.data.sprites.other['official-artwork'].front_default,
-            name: res.data.name,
-            types: res.data.types.map((type) => ({
-              no: type.slot,
-              name: type.type.name,
-            })),
-          }))
+      const pokemonList = await Promise.all(
+        pokemonListData.pokemonList.map(async (pokemon, index) => {
+          const pokemonDetail = await httpRequest
+            .get<TResponsePokemonStats>(`/pokemon/${pokemon.pokemon.name}`)
+            .then((res) => ({
+              imgUrl: res.data.sprites.other['official-artwork'].front_default,
+              name: res.data.name,
+              types: res.data.types.map((type) => ({
+                no: type.slot,
+                name: type.type.name,
+              })),
+            }))
 
-        pokemonList.push({
-          no: index + 1,
-          imgUrl: pokemonDetail.imgUrl,
-          name: pokemonDetail.name,
-          types: pokemonDetail.types,
-        })
-      }
+          return {
+            no: index + 1,
+            imgUrl: pokemonDetail.imgUrl,
+            name: pokemonDetail.name,
+            types: pokemonDetail.types,
+          }
+        }),
+      )
 
       return pokemonList
     },
