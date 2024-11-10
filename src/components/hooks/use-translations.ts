@@ -26,7 +26,9 @@ export const LangId = {
     Evolution: 'Evolusi',
   },
   PokemonType: {
+    Title: 'Pokemon dengan tipe',
     TypeTitle: 'Tipe Pokémon',
+    TypeSubtitle: 'Tipe Pokemon',
   },
 }
 
@@ -56,7 +58,9 @@ export const LangEn = {
     Evolution: 'Evolution',
   },
   PokemonType: {
+    Title: 'Pokemon with type',
     TypeTitle: 'Pokemon Type',
+    TypeSubtitle: 'Pokemon Type',
   },
 }
 

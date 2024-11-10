@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { httpRequest } from '~/src/libraries/http-request'
 import { TResponsePokemonStats } from '../banner/types'
 import { PokemonListPagination } from './pokemon-list-pagination'
+import { useTranslations } from '~/src/components/hooks/use-translations'
 
 /**
  * =======================================
@@ -154,6 +155,7 @@ export function PokemonListCard({ pokemonDetail, ...props }: TPokemonListCardPro
 interface TPokemonListProps extends BoxProps {}
 
 export function PokemonList({ ...props }: TPokemonListProps) {
+  const t = useTranslations()
   const [pokemonList, setPokemonList] = React.useState<Array<TPokemonListCardProps['pokemonDetail']>>([])
   const { data: pokemonListData, ...pokemonListRes } = useRequestPokemonList()
   const { currentPokemonType } = useStorePokemonTypeList()
@@ -180,7 +182,9 @@ export function PokemonList({ ...props }: TPokemonListProps) {
 
   return (
     <Box {...props}>
-      <Typography className='text-4xl font-bold'>Pokemon with Type {currentPokemonType?.name}</Typography>
+      <Typography className='text-4xl font-bold'>
+        {t.PokemonType.Title} {currentPokemonType?.name}
+      </Typography>
 
       {pokemonList?.map((pokemonDetail) => <PokemonListCard key={pokemonDetail.name} pokemonDetail={pokemonDetail} />)}
 
