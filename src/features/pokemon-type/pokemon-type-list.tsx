@@ -63,7 +63,7 @@ export function PokemonTypeList({ ...props }: TPokemonTypeListProps) {
       {pokemonTypeListData?.pokemonTypeList.map((pokemonType) => (
         <ListItem key={pokemonType.url}>
           <ListItemButton
-            className={cx('min-w-48', currentPokemonType.url === pokemonType.url && 'text-red-700 bg-red-50')}
+            className={cx('min-w-48', currentPokemonType.name === pokemonType.name && 'text-red-700 bg-red-50')}
             onClick={() => setCurrentPokemonType(pokemonType.name, pokemonType.url)}
           >
             {t.PokemonType.TypeSubtitle} <span className='font-bold ml-1'> {pokemonType.name}</span>

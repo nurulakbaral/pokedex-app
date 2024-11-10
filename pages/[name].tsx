@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { type BoxProps, Box, Chip, Skeleton, Typography } from '@mui/material'
+import { type BoxProps, Box, Chip, Skeleton, Typography, IconButton } from '@mui/material'
 import Image from 'next/image'
 import cx from 'clsx'
 import { useTranslations } from '~/src/components/hooks/use-translations'
@@ -10,6 +10,7 @@ import { httpRequest } from '~/src/libraries/http-request'
 import { TResponsePokemonStats } from '~/src/features/banner/types'
 import { requestEvolutionPokemonChain } from '~/src/services/get-pokemon-evolution'
 import { ArrowForward } from '@mui/icons-material'
+import { useStorePokemonTypeList } from '~/src/features/pokemon-type/pokemon-type-list'
 
 /**
  * =======================================
@@ -22,6 +23,7 @@ interface TSectionPokemonEvolutionProps extends BoxProps {
 }
 
 export function SectionPokemonEvolution({ sectionPokemonEvolution, ...props }: TSectionPokemonEvolutionProps) {
+  const router = useRouter()
   const t = useTranslations()
 
   return (
@@ -41,7 +43,14 @@ export function SectionPokemonEvolution({ sectionPokemonEvolution, ...props }: T
         }}
       >
         {sectionPokemonEvolution?.map((evolution, index) => (
-          <Box key={evolution.name + index} display='flex'>
+          <Box
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => router.push(`/${evolution.name}`)}
+            key={evolution.name + index}
+            display='flex'
+          >
             <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
               <Box
                 flexShrink={0}
@@ -214,6 +223,8 @@ interface TSectionPokemonDetailProps extends BoxProps {
 }
 
 export function SectionPokemonDetail({ sectionPokemonDetail, ...props }: TSectionPokemonDetailProps) {
+  const router = useRouter()
+  const { setCurrentPokemonType } = useStorePokemonTypeList()
   const t = useTranslations()
 
   return (
@@ -257,6 +268,10 @@ export function SectionPokemonDetail({ sectionPokemonDetail, ...props }: TSectio
           <Box>
             {sectionPokemonDetail?.types.map((type) => (
               <Chip
+                onClick={() => {
+                  router.push(`/pokemon-type`)
+                  setCurrentPokemonType(type.name, '')
+                }}
                 key={type.name}
                 className={cx(
                   'text-white font-bold mr-2',
