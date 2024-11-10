@@ -17,6 +17,12 @@ export interface TResponsePokemonList {
   }>
 }
 
+/**
+ * =======================================
+ * @Layout Page
+ * ========================================
+ */
+
 export default function PokemonTypePage() {
   const t = useTranslations()
 

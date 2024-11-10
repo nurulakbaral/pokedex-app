@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box, Typography, Grid2 as Grid } from '@mui/material'
+import { Box, Typography, Grid2 as Grid, Dialog, DialogContent } from '@mui/material'
 import Head from 'next/head'
 import { useQuery } from '@tanstack/react-query'
 import { Banner, BannerPokedex, BannerPagination, useStorePagination } from '~/src/features/banner'
@@ -8,6 +8,7 @@ import { BannerPokedexSkeleton } from '~/src/features/banner/banner-pokedex-skel
 import { Show } from '~/src/components/base/Show'
 import { useTranslations } from '~/src/components/hooks/use-translations'
 import { NavigationTop } from '~/src/features/navigation/navigation-top'
+import Image from 'next/image'
 
 export interface TResponsePokemonList {
   count: number
@@ -32,6 +33,43 @@ export function useRequestPokemonList() {
   })
 }
 
+/**
+ * =======================================
+ * Welcome Message
+ * ========================================
+ */
+
+let isShow = false
+
+export function WelcomeMessage() {
+  const [open, setOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!isShow) {
+      setOpen(true)
+      isShow = true
+    }
+  }, [])
+
+  return (
+    <Dialog maxWidth={false} open={open} onClose={() => setOpen(false)}>
+      <DialogContent className='p-12'>
+        <Image className='mb-7' priority width={170} height={60} alt='Pokemon Logo' src='/logos/pokemon-logo.png' />
+
+        <Typography variant='h1' fontWeight={600} textAlign='center'>
+          Welcome to PokèDex
+        </Typography>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+/**
+ * =======================================
+ * @Layout Page
+ * ========================================
+ */
+
 export default function Home() {
   const t = useTranslations()
   const { data: pokemonListData, ...pokemonListRes } = useRequestPokemonList()
@@ -42,6 +80,8 @@ export default function Home() {
         <title>Home</title>
         <link rel='shortcut icon' href='https://assets.pokemon.com/static2/_ui/img/favicon.ico' />
       </Head>
+
+      <WelcomeMessage />
 
       <Box paddingX={16}>
         <NavigationTop />
