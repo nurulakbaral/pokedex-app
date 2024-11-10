@@ -63,7 +63,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
         <MenuItem
           onClick={() => {
             setAnchorEl(null)
-            setPagination(page, 5)
+            setPagination(1, 5)
           }}
         >
           5
@@ -71,7 +71,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
         <MenuItem
           onClick={() => {
             setAnchorEl(null)
-            setPagination(page, 10)
+            setPagination(1, 10)
           }}
         >
           10
@@ -79,7 +79,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
         <MenuItem
           onClick={() => {
             setAnchorEl(null)
-            setPagination(page, 20)
+            setPagination(1, 20)
           }}
         >
           20
@@ -87,7 +87,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
         <MenuItem
           onClick={() => {
             setAnchorEl(null)
-            setPagination(page, 50)
+            setPagination(1, 50)
           }}
         >
           50
@@ -106,7 +106,7 @@ export function PaginationPerPage({ ...props }: TPaginationPerPageProps) {
 interface TBannerPaginationProps extends BoxProps {}
 
 export function BannerPagination({ ...props }: TBannerPaginationProps) {
-  const { perPage, setPagination } = useStorePagination()
+  const { page, perPage, setPagination } = useStorePagination()
   const { data: pokemonListData } = useRequestPokemonList()
 
   return (
@@ -114,6 +114,7 @@ export function BannerPagination({ ...props }: TBannerPaginationProps) {
       <PaginationPerPage />
 
       <Pagination
+        page={page}
         onChange={(_, page) => setPagination(page, perPage)}
         count={Math.ceil(Number(pokemonListData?.totalData || 0) / perPage)}
         variant='outlined'

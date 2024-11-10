@@ -2,6 +2,7 @@ import * as React from 'react'
 import { type BoxProps, Box, Button, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useTranslations } from '~/src/components/hooks/use-translations'
+import { useRouter } from 'next/router'
 
 /**
  * =======================================
@@ -12,6 +13,7 @@ import { useTranslations } from '~/src/components/hooks/use-translations'
 interface TBannerProps extends BoxProps {}
 
 export function Banner({ className, ...props }: TBannerProps) {
+  const router = useRouter()
   const t = useTranslations()
 
   return (
@@ -25,7 +27,12 @@ export function Banner({ className, ...props }: TBannerProps) {
           {t.Banner.Subtitle}
         </Typography>
 
-        <Button className='text-white normal-case text-base font-bold' variant='contained' disableElevation>
+        <Button
+          onClick={() => router.push('/pokemon-type')}
+          className='text-white normal-case text-base font-bold'
+          variant='contained'
+          disableElevation
+        >
           {t.Banner.Button}
         </Button>
       </Box>
