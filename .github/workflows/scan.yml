@@ -1,0 +1,36 @@
+name: Lint and Format Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Run Prettier and ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Prettier Check
+        run: |
+          npx prettier --check .
+
+      - name: Run ESLint Check
+        run: |
+          npx eslint . --ext .js,.jsx,.ts,.tsx
+
+      - name: Show Prettier and ESLint errors
+        if: failure()
+        run: |
+          echo "Prettier or ESLint checks failed. Please fix the errors and push the changes."
