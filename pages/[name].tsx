@@ -39,7 +39,7 @@ export function SectionPokemonEvolution({ sectionPokemonEvolution, ...props }: T
         mt={4}
         p={4}
         sx={{
-          overscrollBehavior: 'contain',
+          overscrollBehaviorX: 'contain',
         }}
       >
         {sectionPokemonEvolution?.map((evolution, index) => (
@@ -118,7 +118,7 @@ export function SectionPokemonStats({ sectionPokemonStats, ...props }: TSectionP
         mt={4}
         p={4}
         sx={{
-          overscrollBehavior: 'contain',
+          overscrollBehaviorX: 'contain',
         }}
       >
         {sectionPokemonStats?.map((stat, index) => (
@@ -187,7 +187,7 @@ export function SectionPokemonImages({ sectionPokemonImages, ...props }: TSectio
 
       <Box
         sx={{
-          overscrollBehavior: 'contain',
+          overscrollBehaviorX: 'contain',
         }}
         maxWidth={'100%'}
         overflow='auto'

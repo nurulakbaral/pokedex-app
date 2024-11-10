@@ -8,6 +8,7 @@ import { httpRequest } from '~/src/libraries/http-request'
 import { TResponsePokemonStats } from '../banner/types'
 import { PokemonListPagination } from './pokemon-list-pagination'
 import { useTranslations } from '~/src/components/hooks/use-translations'
+import { useRouter } from 'next/router'
 
 /**
  * =======================================
@@ -80,10 +81,15 @@ export interface TPokemonListCardProps extends BoxProps {
 }
 
 export function PokemonListCard({ pokemonDetail, ...props }: TPokemonListCardProps) {
+  const router = useRouter()
   const { currentPokemonType } = useStorePokemonTypeList()
 
   return (
     <Box
+      sx={{
+        cursor: 'pointer',
+      }}
+      onClick={() => router.push(`/${pokemonDetail.name}`)}
       boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}
       p={6}
       borderRadius={4}
