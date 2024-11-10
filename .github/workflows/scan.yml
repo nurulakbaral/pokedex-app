@@ -30,11 +30,11 @@ jobs:
 
       - name: Run Prettier Check
         run: |
-          pnpm exec prettier --check .
+          pnpm exec prettier --write "**/*.{js,jsx,ts,tsx}"
 
       - name: Run ESLint Check
         run: |
-          pnpm exec prettier --write "**/*.{js,jsx,ts,tsx}"
+          pnpm exec eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Show Prettier and ESLint errors
         if: failure()
