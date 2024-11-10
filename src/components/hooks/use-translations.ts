@@ -25,6 +25,9 @@ export const LangId = {
     Stats: 'Statistik',
     Evolution: 'Evolusi',
   },
+  PokemonType: {
+    TypeTitle: 'Tipe Pokémon',
+  },
 }
 
 export const LangEn = {
@@ -51,6 +54,9 @@ export const LangEn = {
     OtherImages: 'Other Images',
     Stats: 'Stats',
     Evolution: 'Evolution',
+  },
+  PokemonType: {
+    TypeTitle: 'Pokemon Type',
   },
 }
 
