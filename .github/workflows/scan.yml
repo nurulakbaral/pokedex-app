@@ -7,7 +7,6 @@ on:
   pull_request:
     types:
       - opened
-
 jobs:
   lint:
     name: Run Prettier and ESLint
@@ -20,18 +19,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '20' # Use the Node.js version that your project requires
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Run Prettier Check
         run: |
-          npx prettier --check .
+          pnpm exec prettier --check .
 
       - name: Run ESLint Check
         run: |
-          npx eslint . --ext .js,.jsx,.ts,.tsx
+          pnpm exec eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Show Prettier and ESLint errors
         if: failure()
